@@ -21,10 +21,14 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
-
 export default {
   name: 'BudgetList',
+  props: {
+    list: {
+      type: Array,
+      required: true
+    }
+  },
   data() {
     return {
       header: 'BudgetList',
@@ -32,9 +36,6 @@ export default {
     };
   },
   computed: {
-    ...mapState({
-      list: (state) => state.budget.list,
-    }),
     isList() {
       return this.list.length;
     },
@@ -55,6 +56,7 @@ export default {
   border-radius: 4px;
   display: flex;
   align-items: center;
+  margin-top: 5px;
 }
 
 .list-value {

@@ -1,16 +1,26 @@
 <template>
   <div id="app">
-    <BudgetList />
+    <TotalBalance :total="totalBalanceSum"/>
+    <BudgetList :list="list" />
   </div>
 </template>
 
 <script>
-import BudgetList from '@/components/BudgetList';
+import BudgetList from "@/components/BudgetList";
+import TotalBalance from "@/components/TotalBalance";
+import { mapGetters, mapState } from "vuex";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     BudgetList,
+    TotalBalance,
+  },
+  computed: {
+    ...mapState({
+      list: (state) => state.budget.list,
+    }),
+    ...mapGetters(['totalBalanceSum'])
   },
 };
 </script>
