@@ -8,7 +8,7 @@
         <div v-for="item in list" :key="item.id" class="list-item">
           <span class="list-comment">{{ item.comment }}</span>
           <span class="list-value">{{ item.value }}</span>
-          <ElButton type="danger">delete</ElButton>
+          <ElButton type="danger" @click="onDelete(item.id)">delete</ElButton>
         </div></template
       >
       <template v-else>
@@ -40,7 +40,11 @@ export default {
       return this.list.length;
     },
   },
-  methods: {},
+  methods: {
+    onDelete(id) {
+      this.$emit('deleteItem', id)
+    }
+  },
 };
 </script>
 

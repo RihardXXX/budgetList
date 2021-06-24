@@ -15,7 +15,12 @@ const state = {
   ],
 };
 
-const mutations = {};
+const mutations = {
+  deteleItemList (state, id) {
+    const resultList = [...state.list]
+    state.list = resultList.filter(item => item.id !== id)
+  }
+};
 
 const actions = {};
 

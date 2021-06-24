@@ -1,12 +1,14 @@
 <template>
   <div id="app">
+    <Form />
     <TotalBalance :total="totalBalanceSum"/>
-    <BudgetList :list="list" />
+    <BudgetList :list="list" @deleteItem="deleteItem"/>
   </div>
 </template>
 
 <script>
 import BudgetList from "@/components/BudgetList";
+import Form from "@/components/Form";
 import TotalBalance from "@/components/TotalBalance";
 import { mapGetters, mapState } from "vuex";
 
@@ -15,6 +17,7 @@ export default {
   components: {
     BudgetList,
     TotalBalance,
+    Form
   },
   computed: {
     ...mapState({
@@ -22,6 +25,11 @@ export default {
     }),
     ...mapGetters(['totalBalanceSum'])
   },
+  methods: {
+    deleteItem (id) {
+      this.$store.commit('deteleItemList', id)
+    }
+  }
 };
 </script>
 
