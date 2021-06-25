@@ -19,6 +19,12 @@ const mutations = {
   deteleItemList (state, id) {
     const resultList = [...state.list]
     state.list = resultList.filter(item => item.id !== id)
+  },
+  addObject (state, payload) {
+    const newObject = {...payload, id: Math.random()*100}
+    const newList = [...state.list]
+    newList.push(newObject)
+    state.list = newList
   }
 };
 

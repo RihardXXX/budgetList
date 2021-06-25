@@ -1,5 +1,5 @@
 <template>
-  <div class="total">balance: 00</div>
+  <div class="total">balance: {{ total }}</div>
 </template>
 
 <script>
@@ -8,7 +8,7 @@ export default {
   props: {
     total: {
       type: Number,
-      required: true
+      required: false
     }
   },
 };

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Form />
+    <Form @onSubmitForm="onSubmitForm" />
     <TotalBalance :total="totalBalanceSum"/>
     <BudgetList :list="list" @deleteItem="deleteItem"/>
   </div>
@@ -28,6 +28,9 @@ export default {
   methods: {
     deleteItem (id) {
       this.$store.commit('deteleItemList', id)
+    },
+    onSubmitForm (data) {
+      this.$store.commit('addObject', data)
     }
   }
 };

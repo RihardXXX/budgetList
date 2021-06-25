@@ -1,6 +1,6 @@
 <template>
   <ElCard class="form">
-    <ElForm ref="formData" :model="formData" :rules="rules">
+    <ElForm ref="form" :model="formData" :rules="rules">
       <ElFormItem label="type" prop="outcome">
         <ElSelect v-model="formData.type" placeholder="please enter type">
           <ElOption label="outcome" value="outcome"></ElOption>
@@ -14,7 +14,7 @@
         <ElInput type="number" v-model.number="formData.value"></ElInput>
       </ElFormItem>
       <ElFormItem>
-        <ElButton type="primary" @click="submitForm('formData')">submit</ElButton>
+        <ElButton type="primary" @click="submitForm">submit</ElButton>
       </ElFormItem>
     </ElForm>
   </ElCard>
@@ -31,16 +31,23 @@ export default {
         value: ""
       },
       rules: {
-        comment: [{ required: true, message: "please enter comment", trigger: "submitForm"}],
-        value: [{ required: true, message: "please number value", trigger: "submitForm"}]
+        comment: [
+            { required: true, message: "please enter comment", trigger: "change"},
+            { min: 3, message: "Length should be 3 to 25", trigger: "blur" }
+          ],
+        value: [
+            { required: true, message: "please number value", trigger: "change"}
+          ]
       }
     }
   },
   methods: {
     submitForm (formName) {
-      this.$refs[formName].validate((valid) => {
+      this.$refs.form.validate((valid) => {
+        console.log(formName)
           if (valid) {
-            alert('submit!');
+            this.$emit("onSubmitForm", this.formData)
+            this.$refs.form.resetFields()
           } else {
             console.log('error submit!!');
             return false;
