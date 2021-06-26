@@ -1,16 +1,14 @@
 <template>
   <div class="budget-list-wrap">
+    <Dialog :id="id" />
     <ElCard class="box-card">
       <div slot="header" class="clearfix">
         <span>{{ header }}</span>
       </div>
       <template v-if="isList">
-        <div v-for="item in list" :key="item.id" class="list-item">
-          <span class="list-comment">{{ item.comment }}</span>
-          <span class="list-value">{{ item.value }}</span>
-          <ElButton type="danger" @click="onDelete(item.id)">delete</ElButton>
-        </div></template
-      >
+        <div v-for="item in list" :key="item.id">
+          <BudgetListItem :item="item" @showModal="showModal" />
+        </div></template>
       <template v-else>
         <div class="list-item">
           <ElAlert :title="title" type="success" :closable="false" />
@@ -21,8 +19,16 @@
 </template>
 
 <script>
+import BudgetListItem from "@/components/BudgetListItem"
+import Dialog from "@/components/Dialog"
+import { mapState } from "vuex"
+
 export default {
   name: 'BudgetList',
+  components: {
+    BudgetListItem,
+    Dialog
+  },
   props: {
     list: {
       type: Array,
@@ -33,18 +39,25 @@ export default {
     return {
       header: 'BudgetList',
       title: 'not list',
+      isVisible: false,
+      id: 0
     };
   },
   computed: {
+    ...mapState({
+      ok: (state) => state.budget.ok,
+      cancel: (state) => state.budget.cancel,
+    }),
     isList() {
       return this.list.length;
-    },
-  },
-  methods: {
-    onDelete(id) {
-      this.$emit('deleteItem', id)
     }
   },
+  methods: {
+    showModal (id) {
+      this.$store.commit('isVisibleTrue')
+      this.id = id
+    }
+  }
 };
 </script>
 
@@ -52,20 +65,6 @@ export default {
 .budget-list-wrap {
   max-width: 450px;
   margin: 0 auto;
-}
-
-.list-item {
-  padding: 10px 15px;
-  border: 1px solid #ebeef5;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  margin-top: 5px;
-}
-
-.list-value {
-  margin-left: auto;
-  margin-right: 10px;
 }
 
 .box-card {

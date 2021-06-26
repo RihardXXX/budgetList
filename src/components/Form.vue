@@ -10,7 +10,7 @@
       <ElFormItem label="comment" prop="comment">
         <ElInput v-model="formData.comment"></ElInput>
       </ElFormItem>
-      <ElFormItem label="type" prop="value">
+      <ElFormItem label="value" prop="value">
         <ElInput type="number" v-model.number="formData.value"></ElInput>
       </ElFormItem>
       <ElFormItem>

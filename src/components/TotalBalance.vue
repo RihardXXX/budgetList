@@ -1,5 +1,5 @@
 <template>
-  <div class="total">balance: {{ total }}</div>
+  <div class="total">balance: <span :class="isColor">{{ total }}</span></div>
 </template>
 
 <script>
@@ -11,6 +11,27 @@ export default {
       required: false
     }
   },
+  data () {
+    return {
+      color: {
+        positive: 'positive',
+        negative: 'negative',
+        zero: 'zero'
+      }
+    }
+  },
+  computed: {
+    isColor () {
+      const { total, color: { positive, negative, zero } } = this
+      if (total > 0) {
+        return positive
+      } else if (total < 0) {
+        return negative
+      } else {
+        return zero
+      }
+    }
+  }
 };
 </script>
 
@@ -26,4 +47,17 @@ export default {
   font-size: 28px;
   font-weight: bold;
 }
+
+.positive {
+  color: green
+}
+
+.negative {
+  color: red;
+}
+
+.zero {
+  color: black;
+}
+
 </style>

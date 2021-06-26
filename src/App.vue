@@ -1,8 +1,10 @@
 <template>
   <div id="app">
+    <!-- ok: {{ok}}
+    cancel: {{cancel}} -->
     <Form @onSubmitForm="onSubmitForm" />
     <TotalBalance :total="totalBalanceSum"/>
-    <BudgetList :list="list" @deleteItem="deleteItem"/>
+    <BudgetList :list="list"/>
   </div>
 </template>
 
@@ -22,13 +24,12 @@ export default {
   computed: {
     ...mapState({
       list: (state) => state.budget.list,
+      ok: (state) => state.budget.ok,
+      cancel: (state) => state.budget.cancel,
     }),
     ...mapGetters(['totalBalanceSum'])
   },
   methods: {
-    deleteItem (id) {
-      this.$store.commit('deteleItemList', id)
-    },
     onSubmitForm (data) {
       this.$store.commit('addObject', data)
     }
