@@ -24,6 +24,22 @@
 export default {
   name: "Form",
   data () {
+    var checkValue= (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('Please input the value > 0'));
+        }
+        setTimeout(() => {
+          if (!Number.isInteger(value)) {
+            callback(new Error('Please input digits'));
+          } else {
+            if (value <= 0) {
+              callback(new Error('Value > 0'));
+            } else {
+              callback();
+            }
+          }
+        }, 1000);
+      };
     return {
       formData: {
         type: "outcome",
@@ -36,15 +52,15 @@ export default {
             { min: 3, message: "Length should be 3 to 25", trigger: "blur" }
           ],
         value: [
-            { required: true, message: "please number value", trigger: "change"}
+            { validator: checkValue, trigger: "change"}
           ]
       }
     }
   },
   methods: {
-    submitForm (formName) {
+    submitForm () {
       this.$refs.form.validate((valid) => {
-        console.log(formName)
+        console.log(this.$refs.form)
           if (valid) {
             this.$emit("onSubmitForm", this.formData)
             this.$refs.form.resetFields()

@@ -1,7 +1,8 @@
 <template>
   <div class="list-item">
+    <i :class="isIcon"></i>
     <span class="list-comment">{{ item.comment }}</span>
-    <span class="list-value">{{ item.value }}</span>
+    <span class="list-value" :style="{ color: isColor }">{{ item.value }}</span>
     <ElButton type="danger" @click="onDelete(item.id)">delete</ElButton>
   </div>
 </template>
@@ -13,6 +14,14 @@ export default {
   name: "BudgetListItem",
   props: {
     item: Object
+  },
+  computed: {
+    isIcon () {
+      return this.item.type === "income" ? 'el-icon-top' : 'el-icon-bottom'
+    },
+    isColor () {
+      return this.item.type === "income" ? 'green' : 'red'
+    }
   },
   methods: {
     onDelete (id){
@@ -34,5 +43,8 @@ export default {
 .list-value {
   margin-left: auto;
   margin-right: 10px;
+}
+.list-comment {
+  margin-left: 5px;
 }
 </style>

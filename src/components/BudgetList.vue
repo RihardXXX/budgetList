@@ -6,7 +6,7 @@
         <span>{{ header }}</span>
       </div>
       <template v-if="isList">
-        <div v-for="item in list" :key="item.id">
+        <div v-for="item in resultList" :key="item.id">
           <BudgetListItem :item="item" @showModal="showModal" />
         </div></template>
       <template v-else>
@@ -33,6 +33,10 @@ export default {
     list: {
       type: Array,
       required: true
+    },
+    params: {
+      type: String,
+      required: false
     }
   },
   data() {
@@ -50,6 +54,11 @@ export default {
     }),
     isList() {
       return this.list.length;
+    },
+    resultList () {
+      const { params, list } = this
+      if(params === 'all') return list
+      return !params ? list : list.filter(item => item.type === params)
     }
   },
   methods: {

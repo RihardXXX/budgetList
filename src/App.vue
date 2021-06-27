@@ -1,10 +1,9 @@
 <template>
   <div id="app">
-    <!-- ok: {{ok}}
-    cancel: {{cancel}} -->
     <Form @onSubmitForm="onSubmitForm" />
     <TotalBalance :total="totalBalanceSum"/>
-    <BudgetList :list="list"/>
+    <Filters @isFilter="isFilter" />
+    <BudgetList :list="list" :params="params"/>
   </div>
 </template>
 
@@ -12,6 +11,7 @@
 import BudgetList from "@/components/BudgetList";
 import Form from "@/components/Form";
 import TotalBalance from "@/components/TotalBalance";
+import Filters from "@/components/Filters";
 import { mapGetters, mapState } from "vuex";
 
 export default {
@@ -19,7 +19,13 @@ export default {
   components: {
     BudgetList,
     TotalBalance,
-    Form
+    Form,
+    Filters
+  },
+  data () {
+    return {
+      params: null
+    }
   },
   computed: {
     ...mapState({
@@ -27,11 +33,14 @@ export default {
       ok: (state) => state.budget.ok,
       cancel: (state) => state.budget.cancel,
     }),
-    ...mapGetters(['totalBalanceSum'])
+    ...mapGetters(['totalBalanceSum', 'resultList'])
   },
   methods: {
     onSubmitForm (data) {
       this.$store.commit('addObject', data)
+    },
+    isFilter (param) {
+      this.params = param
     }
   }
 };
